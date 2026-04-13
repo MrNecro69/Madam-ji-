@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madam Ji 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff9ecb, #ffc3e0);
+  overflow: hidden;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: white;
+}
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #ff4fa3;
+  color: white;
+  transition: 0.3s;
+}
+button:hover {
+  transform: scale(1.1);
+  background: #ff2f8e;
+}
+.music-btn {
+  background: #ffffff;
+  color: #ff4fa3;
+  font-weight: bold;
+}
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  transform: rotate(45deg);
+  animation: float 6s infinite ease-in;
+}
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  border-radius: 50%;
+}
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: -10px; top: 0; }
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+}
+</style>
+</head>
+<body><audio id="bgMusic" loop>
+  <source src="tu-hi-haqeeqat.mp3" type="audio/mpeg">
+</audio><div class="container">
+  <div class="card" id="card">
+    <h1>Madam Ji 💕</h1>
+    <p id="text">Tap below… I have something special for you 💖</p>
+    <div id="buttons">
+      <button class="music-btn" onclick="startExperience()">🎶 Start</button>
+    </div>
+  </div>
+</div><script>
+let step = 0;
+let started = false;
+
+const steps = [
+  {
+    text: "Can I ask you something? 😊",
+    yes: 1,
+    no: 2
+  },
+  {
+    text: "Do you believe in cute surprises? 💫",
+    yes: 3,
+    no: 3
+  },
+  {
+    text: "Okay... but just listen once? 😌",
+    yes: 3,
+    no: 3
+  },
+  {
+    text: "\"Tu hi haqeeqat, khwaab tu...\" ❤️",
+    yes: 4,
+    no: 4
+  },
+  {
+    text: "\"Tu hi dil hai, tu hi jaan bhi...\" 💖",
+    yes: 5,
+    no: 5
+  },
+  {
+    text: "I really like you... 🥺💗",
+    yes: 6,
+    no: 6
+  },
+  {
+    text: "Will you be mine? 💍✨",
+    yes: 7,
+    no: 8
+  },
+  {
+    text: "You just made me the happiest person alive 😭❤️",
+    yes: 7,
+    no: 7
+  },
+  {
+    text: "I'll still wait... because you're special 💕",
+    yes: 7,
+    no: 8
+  }
+];
+
+function startExperience() {
+  const music = document.getElementById("bgMusic");
+  music.play();
+  started = true;
+
+  document.getElementById("text").innerText = steps[0].text;
+  document.getElementById("buttons").innerHTML = `
+    <button onclick="nextStep(1)">Yes</button>
+    <button id="noBtn">No</button>
+  `;
+
+  // attach runaway behavior
+  setTimeout(() => {
+    const noBtn = document.getElementById("noBtn");
+
+    const moveNo = () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    };
+
+    noBtn.addEventListener("mouseover", moveNo);
+    noBtn.addEventListener("click", moveNo);
+  }, 100);
+}
+
+function nextStep(choice) {
+  step = choice === 1 ? steps[step].yes : steps[step].no;
+  document.getElementById("text").innerText = steps[step].text;
+}
+
+// Floating hearts
+setInterval(() => {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 300);
+</script></body>
+</html>
